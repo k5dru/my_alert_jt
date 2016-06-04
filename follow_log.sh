@@ -13,9 +13,15 @@ if [ ! -f "$wsjtx_all" ]; then
 	exit 1 
 fi 
 
-tail -fn200 $wsjtx_all | 
+tail -fn100 $wsjtx_all | 
 while read line; do 
   grid=$(echo $line | awk '{print $NF}')
+  time=$(echo $line | cut -f 1 -d ' ')
+  if [ "$time" != "$oldtime" ]; then 
+    echo ------------------------------------
+    oldtime="$time"
+  fi
+	
   echo -n "$line -- " | sed 's/CQ/[33mCQ/;s/$/[m/' 
   ./check_log_for_grid $wsjtx_log $grid 
 done
