@@ -1,6 +1,6 @@
 # my_alert_jt
 Linux command-line program to display additional information from WSJT-X logfile, 
-like where a grid is and if you've worked that place before in WSJT-X.
+like where a grid is and if you've worked that place before in WSJT-X.  
 
 I banged this out in a weekend, after becoming frustrated with WSJT-X which displays 
 the general area of the world you are receiving based on call-sign decodes. People 
@@ -14,18 +14,26 @@ hard-coded in spots. By putting it here, I hope that it can be of service to bot
 the other ham-radio operators on Linux who are into JT modes and frustrated by the   
 lack of insight in the base program.  
 
+I used the MaxMind data set to find the nearest (sort of) point to the center of 
+a grid square. NOTE: this dataset has all sorts of obscure little places, so it is likely 
+that the center of a square is some obscure little place.  Note also! The center of a 
+square may be close to a different US State from which a caller is calling, particularly 
+for the tiny little states in the northeast. So, this program can't be fully relied on
+for WAS, but will certainly get you close.
+
 INSTRUCTIONS:
 
-git clone https://github.com/k5dru/my_alert_jt
+<pre>
+  git clone https://github.com/k5dru/my_alert_jt
+  cd my_alert_jt/
+  chmod +x follow_log.sh 
+  cc -O2 check_log_for_grid.c -o check_log_for_grid -lm
+  ./follow_log.sh
+</pre>
 
-cd my_alert_jt/
-
-chmod +x make.sh 
-
-./make.sh 
-
-chmod +x follow_log.sh 
-
-./follow_log.sh
-  
 That's it.  Enjoy.  K5DRU
+
+  "This product includes data created by MaxMind, available from http://www.maxmind.com/ and
+   Copyright (c) 2008 MaxMind Inc.  All Rights Reserved."
+
+No warranties; attribution appreciated. 
