@@ -3,11 +3,8 @@
 	for each new log entry, send an alert of some sort if it is a 
 	new grid, new country, or new state/location within country. 
 
-    weekend hack project by K5DRU 
-
-    totally free software; improve it if you want.  
-
 */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,9 +15,9 @@
 
 #define INFILENAME "worldcitiespop.sorted_lon_lat.txt"
 #define CACHEFILE "locationcache.txt" 
-#define LOGFILE "/home/lemley/.local/share/WSJT-X/wsjtx.log" 
 #define SEARCHDEGREES 1
 
+char *logfilename = NULL; 
 FILE *infile = NULL; 
 long infile_size = 0;
 #define FILEBUFFERSIZE 32768
@@ -351,7 +348,13 @@ int load_city_from_grid(char *uppergrid)
 	return SUCCESS; 
 }
 
-int check_city_against_log(city_struct *input_city, city_struct *workedbefore) 
+int exit_normal_failure() 
+{ 
+	printf ("\n"); 
+	exit(0); 
+} 
+
+void check_city_against_log(city_struct *input_city, city_struct *workedbefore) 
 {
 	/* do whatever I need to check input_city's data against all the grids in the logfile*/
 	FILE *logfile;
@@ -360,9 +363,11 @@ int check_city_against_log(city_struct *input_city, city_struct *workedbefore)
 	char *q; 
 	char tempgrid[11];
 	
-	if (NULL == (logfile = fopen(LOGFILE, "r"))) 
-		return FAILURE;  /* failure */
-
+	if (NULL == (logfile = fopen(logfilename, "r"))) 
+	{
+		fprintf(stderr, "Beg pardon; can't open log file %s\n", logfilename); 
+		exit_normal_failure();
+	}
 	while (fgets(logline, sizeof(logline), logfile)) 
 	{ 
 		p = logline;
@@ -392,28 +397,27 @@ int check_city_against_log(city_struct *input_city, city_struct *workedbefore)
 	fclose(logfile); 
 } 
 
-int exit_normal_failure() 
-{ 
-	printf ("\n"); 
-	exit(0); 
-} 
-
-
 int main(int argc, char **argv) 
 { 
 	char uppergrid[11]; 
 	int ret, i;
 	city_struct this_city, workedbefore;
 
-	if (argc > 1) 
+	/* TODO:  parse args correctly.  */ 
+	if (argc > 2) 
 	{
 		double checklat, checklon; 
 
-		if (strlen(argv[1]) < 4 || strlen(argv[1])> 10) 
-			exit_normal_failure(); 
+		logfilename = argv[1];
 
-		for (i = 0; i <= strlen(argv[1]); i++) 
-			uppergrid[i] = toupper(argv[1][i]); 
+		if (strlen(argv[2]) < 4 || strlen(argv[2])> 10) 
+		{ 
+			fprintf(stderr, "Invalid grid: %s\n", argv[2]); 
+			exit_normal_failure(); 
+		}
+
+		for (i = 0; i <= strlen(argv[2]); i++) 
+			uppergrid[i] = toupper(argv[2][i]); 
 
 #ifdef DEBUG 
 	printf ("checking grid validity\n"); 
