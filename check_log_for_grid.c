@@ -46,64 +46,67 @@ void print_city(city_struct *c)
 }
 
 
-void addtolocationcache(city_struct *c) 
-{
-	FILE *outfile;
-	
-	if (NULL == (outfile = fopen(CACHEFILE, "ab")))
-		return; 
-
-	fprintf (outfile, "%s|%s|%s|%s|%s|%s|%s|%s|\n", c->Grid, c->Country, c->City, 
-		c->AccentCity, c->Region,c->Population, c->Latitude, c->Longitude);
-
-	fclose(outfile);
-}
-
 #define FAILURE 1
 #define SUCCESS 0
 
+/* todo: rewrite checklocationcache and addtolocationcache to manage the file 
+   in a more better way, i.e., sorted and with smarter search.  */ 
+
+void addtolocationcache(city_struct *c) 
+{
+  FILE *outfile;
+
+  if (NULL == (outfile = fopen(CACHEFILE, "ab")))
+    return; 
+
+  fprintf (outfile, "%s|%s|%s|%s|%s|%s|%s|%s|\n", c->Grid, c->Country, c->City, 
+    c->AccentCity, c->Region,c->Population, c->Latitude, c->Longitude);
+
+  fclose(outfile);
+}
+
 int checklocationcache(char *grid, city_struct *c) 
 { 
-	/* return 1 if found, 0 if not or error. */ 
-	FILE *cachefile;
-	char cachestring[255]; 
-	int retval = FAILURE;
-
-	if (NULL == (cachefile = fopen(CACHEFILE, "r"))) 
-		return retval; 
+  /* return 1 if found, 0 if not or error. */ 
+  FILE *cachefile;
+  char cachestring[255]; 
+  int retval = FAILURE;
+  
+  if (NULL == (cachefile = fopen(CACHEFILE, "r"))) 
+    return retval; 
 	
-	while (fgets(cachestring, sizeof(cachestring), cachefile)) 
-	{ 
-	if (!strncmp(cachestring, grid, strlen(grid)))
-	{ 
-		char *p, *q;
+  while (fgets(cachestring, sizeof(cachestring), cachefile)) 
+  { 
+    if (!strncmp(cachestring, grid, strlen(grid)))
+    { 
+      char *p, *q;
 #ifdef DEBUG 
-		printf("Got from locationcache: %s", cachestring); 
+      printf("Got from locationcache: %s", cachestring); 
 #endif 
-
-		/* parse into current city */ 
-		p = cachestring; 
-
+      
+      /* parse into current city */ 
+      p = cachestring; 
+      
 #define populate(X) {q = p; while (*q != '|' && *q != '\n') q++; memcpy(c->X, p, q-p); c->X[q-p] = 0; p = q+1;}
-		populate (Grid);
- 		populate (Country);
-		populate (City);
-		populate (AccentCity);
-		populate (Region);
-		populate (Population);
-		populate (Latitude);
-		populate (Longitude);
+      populate (Grid);
+      populate (Country);
+      populate (City);
+      populate (AccentCity);
+      populate (Region);
+      populate (Population);
+      populate (Latitude);
+      populate (Longitude);
 #undef populate 
 
 #ifdef DEBUG 
-		printf("checklocationcache: setting SUCCESS\n", cachestring); 
+      printf("checklocationcache: setting SUCCESS\n", cachestring); 
 #endif 
-		retval = SUCCESS;
-		break;
-	}
-	}
-	fclose(cachefile); 
-	return retval;
+      retval = SUCCESS;
+      break;
+    }
+  }
+  fclose(cachefile); 
+  return retval;
 }
 
 
@@ -412,7 +415,7 @@ int main(int argc, char **argv)
 
 		if (strlen(argv[2]) < 4 || strlen(argv[2])> 10) 
 		{ 
-			fprintf(stderr, "Invalid grid: %s\n", argv[2]); 
+			/* fail silently */ 
 			exit_normal_failure(); 
 		}
 
