@@ -41,10 +41,8 @@ city_struct current_city;
 
 void print_city(city_struct *c) 
 {
-	printf ("%s|%s|%s|%s|%s|%s|%s|%s\n", c->Country, c->City, 
-		c->AccentCity, c->Region,c->Population, c->Latitude, c->Longitude, c->Grid);
+  printf ("%s|%s|%s|%s\n", c->Country, c->AccentCity, c->Region, c->Grid);
 }
-
 
 #define FAILURE 1
 #define SUCCESS 0
