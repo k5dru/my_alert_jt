@@ -11,7 +11,16 @@ Windows I could use one or more great programs for this purpose, but I don't.
 
 This is the initial version of this program, functional for me, but still crufty and 
 hard-coded in spots. By putting it here, I hope that it can be of service to both of
-the other ham-radio operators on Linux who are into JT modes and frustrated by the 
+the other ham-radio operators on Linux who are into JT modes and frustrated by the   
 lack of insight in the base program.  
 
-K5DRU
+INSTRUCTIONS:
+
+  git clone https://github.com/k5dru/my_alert_jt
+  cd my_alert_jt/
+  chmod +x make.sh 
+  ./make.sh 
+  chmod +x follow_log.sh 
+  ./follow_log.sh
+  
+Tat's it.  Enjoy.  K5DRU
