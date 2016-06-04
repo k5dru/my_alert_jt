@@ -16,11 +16,16 @@ lack of insight in the base program.
 
 INSTRUCTIONS:
 
-  git clone https://github.com/k5dru/my_alert_jt
-  cd my_alert_jt/
-  chmod +x make.sh 
-  ./make.sh 
-  chmod +x follow_log.sh 
-  ./follow_log.sh
+git clone https://github.com/k5dru/my_alert_jt
+
+cd my_alert_jt/
+
+chmod +x make.sh 
+
+./make.sh 
+
+chmod +x follow_log.sh 
+
+./follow_log.sh
   
-Tat's it.  Enjoy.  K5DRU
+That's it.  Enjoy.  K5DRU
