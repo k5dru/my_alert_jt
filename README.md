@@ -37,3 +37,11 @@ That's it.  Enjoy.  K5DRU
    Copyright (c) 2008 MaxMind Inc.  All Rights Reserved."
 
 No warranties; attribution appreciated. 
+
+Edit 2017-05-20: I probably won't be updating this project. Other projects may find 
+useful the file of world cities and their calculated grid location and distance from 
+grid centroid. For instance grid FN42 is best understood as "Boston, MA, USA" even 
+though a point in that grid could be in any of three US states. I've attempted to 
+use the most populated place name as a recognizable marker for a grid, and that has worked 
+reasonably well for me. YMMV. Good luck. K5DRU 
+
