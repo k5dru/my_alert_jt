@@ -7889,3 +7889,6 @@ RP99|Russian Federation|leningradskiy|Leningradskiy|15|712|69.383333|178.416667|
 RQ50|Russian Federation|tumannaya stantsiya|Tumannaya Stantsiya|15||70.077222|171.085833|
 RQ90|Russian Federation|ushakovskiy|Ushakovskiy|15||70.983333|178.5|
 SH03|Fiji|tavuki|Tavuki|03||-16.8|180.0|
+BI00|Cook Islands|omoka|Omoka|00|180|-8.9816667|-158.0605556|
+JB59|Namibia|affenrucken|Affenrücken|31||-28.0833333|15.8166667|
+RM73|United States of America|amchitka|Amchitka|AK||51.5672222|178.8775000|

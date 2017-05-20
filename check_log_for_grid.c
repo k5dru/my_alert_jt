@@ -294,7 +294,7 @@ int load_city_from_grid(char *uppergrid)
   
     if (ret == FAILURE) 
     { 
-      printf("Grid fail. \n"); 
+/*       printf("Grid fail: %s \n", uppergrid);  */ 
       return FAILURE; 
     }
   
@@ -364,7 +364,8 @@ void check_city_against_log(city_struct *input_city, city_struct *workedbefore)
   char logline[255];
   char *p; 
   char *q; 
-  char tempgrid[11];
+  char tempgrid[44];
+  char tempcall[44];
   
   if (NULL == (logfile = fopen(logfilename, "r"))) 
   {
@@ -373,17 +374,19 @@ void check_city_against_log(city_struct *input_city, city_struct *workedbefore)
   }
   while (fgets(logline, sizeof(logline), logfile)) 
   { 
-    p = logline;
-    while(*(p++) != ','); 
-    while(*(p++) != ','); 
-    while(*(p++) != ','); 
-    q = p; 
-    while(*q != ',')
-      q++; 
+    p = logline; 
+    q = p; while(*q != ',') q++; 
+    p = q+1; q++; while(*q != ',') q++;
+    p = q+1; q++; while(*q != ',') q++;
+    memcpy(tempcall, p, q-p); 
+    tempcall[q-p]=0; 
+    p = q+1; q++; while(*q != ',') q++;
     memcpy(tempgrid, p, q-p); 
     tempgrid[q-p]=0; 
+
     if (load_city_from_grid(tempgrid) == SUCCESS)  /* success */
     { 
+/* printf("worked %s | %s | %s | %s\n", tempcall, current_city.Country,current_city.Region, current_city.AccentCity ); */ 
 #define populate(X) {if (!strcmp(input_city->X, current_city.X)) strcpy(workedbefore->X, "Y");} 
        populate (Country);
       populate (City);

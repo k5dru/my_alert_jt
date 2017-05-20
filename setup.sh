@@ -9,6 +9,8 @@ fi
 echo sorting... wait plox. 
 gzip -dc worldcitiespop.txt.gz | sort -k 7,7n -k 6,6n -t , > worldcitiespop.sorted_lon_lat.txt
 
+. choose_best_place_per_grid.sh
+
 echo done.  fix any errors. 
-then run ./follow_log.sh
+echo then run ./follow_log.sh
 
